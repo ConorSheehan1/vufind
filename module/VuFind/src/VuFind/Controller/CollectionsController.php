@@ -291,6 +291,30 @@ class CollectionsController extends AbstractBase
     }
 
     /**
+     * Get the stopwords to be removed from the browse_hierarchy facet
+     *
+     * @return array stopwords or empty array
+     */
+    protected function getStopWords()
+    {
+        return isset($this->config->Collections->stopWords)
+            ? $this->config->Collections->stopWords->toArray() : [];
+    }
+
+    /**
+     * build regex used to remove stopwords for collection sorting
+     *
+     * @return string $stopwordsRegex
+     */
+    protected function getStopwordsRegex()
+    {
+        $stopwords = array_map('strtolower', $this->getStopwords());
+        $stopwordsCaptureGroup = implode("|", $stopwords);
+        $stopwordsRegex = "/^({$stopwordsCaptureGroup})\s/";
+        return $stopwordsRegex;
+    }
+
+    /**
      * Normalize the value for the browse sort
      *
      * @param string $val Value to normalize
@@ -303,6 +327,7 @@ class CollectionsController extends AbstractBase
         $valNormalized = strtolower($valNormalized);
         $valNormalized = preg_replace("/[^a-zA-Z0-9\s]/", "", $valNormalized);
         $valNormalized = trim($valNormalized);
+        $valNormalized = preg_replace($this->getStopwordsRegex(), "", $valNormalized);
         return $valNormalized;
     }
 
