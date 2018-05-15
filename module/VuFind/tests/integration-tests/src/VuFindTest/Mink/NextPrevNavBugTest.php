@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Mink record actions test class.
  *
@@ -26,7 +25,6 @@
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Page
  */
-
 namespace VuFindTest\Mink;
 
 /**
@@ -61,10 +59,9 @@ class NextPrevSearchBug extends \VuFindTest\Unit\MinkTestCase
 
     public function testNextPrevWorksOnCollections()
     {
-        // run a blank search and click on the first collection
+        // run a blank search, then visit collection
         $session = $this->getMinkSession();
         $session->visit($this->getVuFindUrl() . "/Search/Results?lookfor=&type=AllFields&limit=20&sort=relevance");
-        // $collectionLink = $this->findXpath($this->findCss($session->getPage(), ".result-body"), "//div//text()[contains(., '1897 Royal Visit Album')]");
 
         $session = $this->visitCollection($this->getNliTestDataUrl("the_james_joyce_collection"));
         $pagerText = $this->findCss($session->getPage(), ".pager")->getText();
@@ -73,5 +70,4 @@ class NextPrevSearchBug extends \VuFindTest\Unit\MinkTestCase
             $this->assertContains($controlText, $pagerText);
         }
     }
-   
 }
