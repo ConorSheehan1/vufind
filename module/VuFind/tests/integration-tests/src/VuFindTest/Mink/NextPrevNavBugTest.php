@@ -29,7 +29,16 @@
 
 namespace VuFindTest\Mink;
 
-class NliNextPrevSearchBug extends \VuFindTest\Unit\NliMinkTestCase
+/**
+ * Mink record actions test class.
+ *
+ * @category VuFind
+ * @package  Tests
+ * @author   Conor Sheehan <csheehan@nli.ie>
+ * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ * @link     https://vufind.org Main Page
+ */
+class NextPrevSearchBug extends \VuFindTest\Unit\MinkTestCase
 {
 
     public function testNextPrevSearchBugDoesNotOccur()
