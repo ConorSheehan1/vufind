@@ -93,7 +93,7 @@ class ResultScroller extends AbstractPlugin
     public function init($searchObject)
     {
         // Do nothing if disabled:
-        if (!$this->enabled) {
+        if (!$this->enabled | $searchObject->getResultTotal === 0) {
             return false;
         }
 
