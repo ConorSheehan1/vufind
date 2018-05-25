@@ -54,7 +54,7 @@ class ResultScrollerTest extends TestCase
         $results = $this->getMockResults(0, 0, 0, true, 'sorted');
         $plugin = $this->getMockResultScroller($results);
         $this->assertFalse($plugin->init($results));
-       
+
         $expected = [
             'firstRecord' => null, 'lastRecord' => null,
             'previousRecord' => null, 'nextRecord' => null,

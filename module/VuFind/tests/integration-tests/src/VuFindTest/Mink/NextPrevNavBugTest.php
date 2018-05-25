@@ -38,14 +38,16 @@ namespace VuFindTest\Mink;
  */
 class NextPrevSearchBug extends \VuFindTest\Unit\MinkTestCase
 {
-
-    // if next_prev_navigation and first_last_navigation are set to true
-    // and a search which returns no results is run
-    // when a record page is visited an exception is thrown because the search is set but empty
+    /**
+     * Test next_prev_nav bug
+     * if next_prev_navigation and first_last_navigation are set to true
+     * and a search which returns no results is run
+     * when a record page is visited an exception is thrown because the search is set but empty
+     *
+     * @return void
+     */
     public function testNextPrevSearchBugDoesNotOccur()
     {
-        // TODO ensure next prev navigation is set for this test
-        // $this->enableNextPrevNavigation();
         $this->changeConfigFile("config.ini", ["Record" => ["next_prev_navigation" => true, "first_last_navigation" => true]]);
 
         // when a search returns no results
@@ -55,27 +57,11 @@ class NextPrevSearchBug extends \VuFindTest\Unit\MinkTestCase
         $this->assertEquals($this->findCss($session->getPage(), ".search-stats > h2")->getText(), "No Results Found");
 
         // collection should render as normal
-        $session->visit("http://localhost/vufindtest/Record/geo20001");
+        $session->visit($this->getVuFindUrl() . "/Record/geo20001");
 
         // should fail if exception is thrown
         $this->assertContains("Test Publication 20001");
 
         $this->restoreConfigs();
-
-        // $this->disableNextPrevNavigation();
     }
-
-    // public function testNextPrevWorksOnCollections()
-    // {
-    //     // run a blank search, then visit collection
-    //     $session = $this->getMinkSession();
-    //     $session->visit($this->getVuFindUrl() . "/Search/Results?lookfor=&type=AllFields&limit=20&sort=relevance");
-
-    //     $session = $this->visitCollection($this->getNliTestDataUrl("the_james_joyce_collection"));
-    //     $pagerText = $this->findCss($session->getPage(), ".pager")->getText();
-    //     $pageControls = ["First", "Previous", "Next", "Last"];
-    //     foreach ($pageControls as $controlText) {
-    //         $this->assertContains($controlText, $pagerText);
-    //     }
-    // }
 }
