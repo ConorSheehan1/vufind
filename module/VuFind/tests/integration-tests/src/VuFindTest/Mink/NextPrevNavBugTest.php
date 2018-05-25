@@ -39,10 +39,11 @@ namespace VuFindTest\Mink;
 class NextPrevSearchBug extends \VuFindTest\Unit\MinkTestCase
 {
     /**
-     * Test next_prev_nav bug
+     *
      * if next_prev_navigation and first_last_navigation are set to true
      * and a search which returns no results is run
-     * when a record page is visited an exception is thrown because the search is set but empty
+     * when a record page is visited no next prev navigation should be shown
+     * and no exception should be thrown
      *
      * @return void
      */
@@ -54,7 +55,7 @@ class NextPrevSearchBug extends \VuFindTest\Unit\MinkTestCase
         // make sure no errors occur when visiting a collection record after
         $session = $this->getMinkSession();
         $session->visit($this->getVuFindUrl() . "/Search/Results?lookfor=__ReturnNoResults__&type=AllField");
-        $this->assertEquals($this->findCss($session->getPage(), ".search-stats > h2")->getText(), "No Results Found");
+        $this->assertEquals($this->findCss($session->getPage(), ".search-stats > h2")->getText(), "No Results!");
 
         // collection should render as normal
         $session->visit($this->getVuFindUrl() . "/Record/geo20001");
